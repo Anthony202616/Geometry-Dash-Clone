@@ -1,90 +1,99 @@
 // levels.js
-// Définit la structure du niveau 1.
-// Légende des blocs (Grid Y=0 est le ciel, Y=9 est le sol)
-// 0 = Vide
-// 1 = Bloc (Mur / Sol)
-// 2 = Pique pointant vers le haut ou plafond
-// 3 = Portail Fusée (Vert)
-// 4 = Portail Cube (Cube Normal, Cyan)
-// 5 = Portail Gravité Inversée (Jaune)
-// 6 = Portail Gravité Normale (Bleu)
 
-const levelsData = {
-    1: {
-        name: "Stereo Madness (Facile)",
-        bgColor: "#0a0a2a", // Sombre bleuté
-        primaryColor: "#00ffcc", // Tron cyan
-        obstacleColor: "#111144",
-        speed: 3.0, // Vitesse de déplacement ultra lente
-        
-        mapColumns: []
-    }
-};
+const levelsData = {};
 
 let cols = [];
-
-// Fonction utilitaire pour répéter des colonnes
 function addP(count, colArray) {
     for(let i=0; i<count; i++) cols.push([...colArray]);
 }
 
-// 1. Zone de départ paisible et très longue
-addP(30, [0,0,0,0,0,0,0,0,0,1]);
+// ==========================================
+// NIVEAU 1 : STEREO MADNESS (Allongé & Complet)
+// ==========================================
+levelsData[1] = {
+    name: "Stereo Madness (Facile)",
+    bgColor: "#0a0a2a", // Sombre bleuté
+    primaryColor: "#00ffcc", // Tron cyan
+    obstacleColor: "#111144",
+    speed: 3.0,
+    mapColumns: []
+};
 
-// 2. Deux piques simples avec énormément d'espace entre eux
-cols.push([0,0,0,0,0,0,0,0,2,1]);
-addP(8,  [0,0,0,0,0,0,0,0,0,1]);  // BEAUCOUP de place pour respirer
-cols.push([0,0,0,0,0,0,0,0,2,1]);
-addP(8,  [0,0,0,0,0,0,0,0,0,1]);
+addP(20, [0,0,0,0,0,0,0,0,0,1]); // Départ
 
-// 3. Grimper sur un mur rectangulaire d'escalier
+// Série de 4 piques espacés
+for(let k=0; k<4; k++) {
+    cols.push([0,0,0,0,0,0,0,0,2,1]);
+    addP(8,  [0,0,0,0,0,0,0,0,0,1]);
+}
+
+// Escalier
 cols.push([0,0,0,0,0,0,0,0,1,1]);
-cols.push([0,0,0,0,0,0,0,1,1,1]); // Marche progressive
-addP(4,  [0,0,0,0,0,0,0,1,1,1]);  // Zone plate d'atterrissage
-cols.push([0,0,0,0,0,0,0,0,1,1]); // Descente
-addP(15, [0,0,0,0,0,0,0,0,0,1]);  // Grande respiration
+cols.push([0,0,0,0,0,0,0,1,1,1]); 
+addP(5,  [0,0,0,0,0,0,0,1,1,1]);  
+cols.push([0,0,0,0,0,0,0,0,1,1]); 
+addP(12, [0,0,0,0,0,0,0,0,0,1]);  
 
-// 4. --- PORTAIL FUSÉE (Plus doux) ---
+// Série de Murs intermédiaires (Saut très haut requis)
+cols.push([0,0,0,0,0,0,0,1,1,1]);
+cols.push([0,0,0,0,0,0,0,1,1,1]);
+addP(12, [0,0,0,0,0,0,0,0,0,1]);
+cols.push([0,0,0,0,0,0,0,1,1,1]);
+cols.push([0,0,0,0,0,0,0,1,1,1]);
+addP(10, [0,0,0,0,0,0,0,0,0,1]);
+
+// FUSÉE
 cols.push([0,0,0,0,0,3,0,0,0,1]); 
-addP(8,  [0,0,0,0,0,0,0,0,0,1]); // Zone libre pour s'habituer à la Fusée
+addP(8,  [0,0,0,0,0,0,0,0,0,1]); 
+addP(6,  [1,0,0,0,0,0,0,0,1,1]); 
+addP(6,  [0,0,0,0,0,0,0,0,0,1]); 
+addP(6,  [1,1,1,0,0,0,0,0,0,1]); 
+addP(6,  [0,0,0,0,0,0,0,0,0,1]); 
+addP(6,  [1,0,0,0,0,0,0,0,1,1]); 
+addP(6,  [0,0,0,0,0,0,0,0,0,1]); 
+addP(6,  [1,1,1,0,0,0,0,0,0,1]); 
+addP(6,  [0,0,0,0,0,0,0,0,0,1]);
 
-// Grotte de Fusée TRES large (Murs très éloignés)
-addP(4,  [1,0,0,0,0,0,0,0,1,1]); // Mur bas en sol uniquement
-addP(5,  [0,0,0,0,0,0,0,0,0,1]); 
-addP(5,  [1,1,1,0,0,0,0,0,0,1]); // Un petit rocher au plafond, bascule facile à faire
-addP(5,  [0,0,0,0,0,0,0,0,0,1]); 
-addP(4,  [1,0,0,0,0,0,0,0,1,1]); 
-
-// 5. --- PORTAIL CUBE (Sortie de fusée) ---
+// CUBE (Sortie Fusée)
 cols.push([0,0,0,0,0,4,0,0,0,1]);
+addP(10, [0,0,0,0,0,0,0,0,0,1]);
+
+// Accélération des piques
+for(let k=0; k<5; k++) {
+    cols.push([0,0,0,0,0,0,0,0,2,1]);
+    addP(6,  [0,0,0,0,0,0,0,0,0,1]);
+}
+
+// GRAVITÉ INVERSÉE
+cols.push([0,0,0,0,0,5,0,0,0,1]); 
+addP(8,  [1,0,0,0,0,0,0,0,0,1]); 
+cols.push([1,2,0,0,0,0,0,0,0,1]); 
+addP(8,  [1,0,0,0,0,0,0,0,0,1]);  
+cols.push([1,2,0,0,0,0,0,0,0,1]); 
+addP(10, [1,0,0,0,0,0,0,0,0,1]);  
+
+// Retour gravité normale
+cols.push([1,0,0,0,0,6,0,0,0,1]); 
 addP(12, [0,0,0,0,0,0,0,0,0,1]);
 
-// 6. --- GRAVITÉ INVERSÉE (Facilitée) ---
-cols.push([0,0,0,0,0,5,0,0,0,1]); // Portail jaune (tombe vers le plafond)
-
-addP(5,  [1,0,0,0,0,0,0,0,0,1]); // Longue glissade de sécurité au plafond
-cols.push([1,2,0,0,0,0,0,0,0,1]); // Un seul pique facile !
-addP(5,  [1,0,0,0,0,0,0,0,0,1]);  // Récupération
-cols.push([1,2,0,0,0,0,0,0,0,1]); // Deuxième pique facile
-addP(8,  [1,0,0,0,0,0,0,0,0,1]);  // Zone sereine
-
-// 7. Retour gravité normale
-cols.push([1,0,0,0,0,6,0,0,0,1]); // Portail Bleu
-addP(15, [0,0,0,0,0,0,0,0,0,1]);
-
-// 8. FIN DU NIVEAU
-addP(30, [0,0,0,0,0,0,0,0,0,1]); // Une gigantesque piste droite finale sereine pour avoir ses 100% sans aucun mur à percuter !
+// LA GRANDE FIN : Arche Mémorable !
+addP(2,  [1,1,0,0,0,0,0,0,1,1]); 
+addP(2,  [1,1,1,0,0,0,0,1,1,1]); 
+cols.push([1,1,1,1,0,0,1,1,1,1]);
+addP(15, [1,1,1,1,1,0,1,1,1,1]); // Tunnel creux en plein ciel !
+addP(2,  [1,1,0,0,0,0,0,0,1,1]); 
+addP(25, [0,0,0,0,0,0,0,0,0,1]); 
 
 levelsData[1].mapColumns = cols;
 
 
 // ==========================================
-// NIVEAU 2 : BACK ON TRACK
+// NIVEAU 2 : BACK ON TRACK (Allongé)
 // ==========================================
 levelsData[2] = {
     name: "Back on Track",
-    bgColor: "#2a0a2a", // Violet foncé
-    primaryColor: "#ff00ff", // Magenta
+    bgColor: "#2a0a2a", 
+    primaryColor: "#ff00ff", 
     obstacleColor: "#441144",
     speed: 3.5, 
     mapColumns: []
@@ -93,24 +102,58 @@ levelsData[2] = {
 let cols2 = [];
 function addP2(count, colArray) { for(let i=0; i<count; i++) cols2.push([...colArray]); }
 
-addP2(20, [0,0,0,0,0,0,0,0,0,1]); // Début
-cols2.push([0,0,0,0,0,0,0,0,2,1]); // Pique
+addP2(15, [0,0,0,0,0,0,0,0,0,1]); 
+
+// Doubles piques espacés
+for(let k=0; k<3; k++) {
+    cols2.push([0,0,0,0,0,0,0,0,2,1]);
+    addP2(1, [0,0,0,0,0,0,0,0,0,1]);
+    cols2.push([0,0,0,0,0,0,0,0,2,1]);
+    addP2(12, [0,0,0,0,0,0,0,0,0,1]);
+}
+
+// Escalier Géant : Maintenez Espace ! (Test de l'auto-jump)
+addP2(6, [0,0,0,0,0,0,0,0,1,1]); 
+addP2(6, [0,0,0,0,0,0,0,1,1,1]); 
+addP2(6, [0,0,0,0,0,0,1,1,1,1]); 
+addP2(8, [0,0,0,0,0,1,1,1,1,1]); 
+// Redescente abrupte
+cols2.push([0,0,0,0,0,0,0,1,1,1]); 
+cols2.push([0,0,0,0,0,0,0,0,1,1]);
 addP2(15, [0,0,0,0,0,0,0,0,0,1]);
-cols2.push([0,0,0,0,0,0,0,0,1,1]); // Escalier
-cols2.push([0,0,0,0,0,0,0,1,1,1]);
-addP2(5,  [0,0,0,0,0,0,0,1,1,1]);
-cols2.push([0,0,0,0,0,0,0,0,2,1]); // Pique vicieux en redescente
-addP2(30, [0,0,0,0,0,0,0,0,0,1]); // Fin
+
+// Pique vicieux en redescente
+cols2.push([0,0,0,0,0,0,0,0,2,1]);
+addP2(15, [0,0,0,0,0,0,0,0,0,1]);
+
+// Enchainement de sauts continus longs
+for(let k=0; k<6; k++) {
+    cols2.push([0,0,0,0,0,0,0,0,2,1]);
+    addP2(6, [0,0,0,0,0,0,0,0,0,1]);
+}
+
+// Grands murs infranchissables
+cols2.push([0,0,0,0,0,0,1,1,1,1]); 
+cols2.push([0,0,0,0,0,0,1,1,1,1]); 
+addP2(12, [0,0,0,0,0,0,0,0,0,1]);
+cols2.push([0,0,0,0,0,1,1,1,1,1]); 
+cols2.push([0,0,0,0,0,1,1,1,1,1]); 
+addP2(15, [0,0,0,0,0,0,0,0,0,1]);
+
+// Arche Finale Niveau 2
+addP2(10, [1,1,0,0,0,0,0,1,1,1]); 
+addP2(25, [0,0,0,0,0,0,0,0,0,1]); 
+
 levelsData[2].mapColumns = cols2;
 
 
 // ==========================================
-// NIVEAU 3 : POLARGEIST
+// NIVEAU 3 : POLARGEIST 
 // ==========================================
 levelsData[3] = {
     name: "Polargeist",
-    bgColor: "#0a2a2a", // Cyan sombre
-    primaryColor: "#00ff88", // Vert printemps
+    bgColor: "#0a2a2a", 
+    primaryColor: "#00ff88", 
     obstacleColor: "#114444",
     speed: 4.0, 
     mapColumns: []
@@ -122,9 +165,10 @@ function addP3(count, colArray) { for(let i=0; i<count; i++) cols3.push([...colA
 addP3(15, [0,0,0,0,0,0,0,0,0,1]);
 cols3.push([0,0,0,0,0,3,0,0,0,1]); // Fusée directe !
 addP3(10, [0,0,0,0,0,0,0,0,0,1]);
-addP3(10, [1,1,0,0,0,0,0,0,1,1]); // Tunnel de vol
+addP3(10, [1,1,0,0,0,0,0,0,1,1]); // Tunnel
+addP3(10, [1,1,1,1,0,0,0,0,0,1]);
+addP3(10, [1,0,0,0,0,0,0,1,1,1]);
 addP3(30, [0,0,0,0,0,0,0,0,0,1]);
 levelsData[3].mapColumns = cols3;
-
 
 window.levelsData = levelsData;
