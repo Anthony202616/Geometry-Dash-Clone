@@ -73,7 +73,7 @@ cols.push([1,0,0,0,0,6,0,0,0,1]); // Portail Bleu
 addP(15, [0,0,0,0,0,0,0,0,0,1]);
 
 // 8. FIN DU NIVEAU
-addP(2,  [1,1,1,1,1,1,1,1,1,1]); // Grand mur final vert de victoire
+addP(30, [0,0,0,0,0,0,0,0,0,1]); // Une gigantesque piste droite finale sereine pour avoir ses 100% sans aucun mur à percuter !
 
 levelsData[1].mapColumns = cols;
 window.levelsData = levelsData;

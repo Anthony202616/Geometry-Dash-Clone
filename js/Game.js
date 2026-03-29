@@ -84,8 +84,9 @@ class Game {
         // --- 3. Détecteur de collisions géré par le niveau ---
         this.checkCollisions();
         
-        // --- 4. Progression UI ---
-        let progress = (this.cameraX / this.currentLevel.totalLength) * 100;
+        // Phase Progression ajustée : la victoire survient quand la caméra est proche du bout
+        let targetX = this.currentLevel.totalLength - this.canvas.width;
+        let progress = (this.cameraX / targetX) * 100;
         if(progress > 100) progress = 100;
         
         document.getElementById("progress-fill").style.width = progress + "%";
@@ -117,11 +118,15 @@ class Game {
                 let blockType = this.currentLevel.getBlockType(col, row);
                 if(blockType === 0) continue;
                 
+                // Rendre la Hitbox des piques beaucoup plus petite que le visuel
+                // pour être très indulgent et ne pas tuer lors d'un effleurement de pixel
+                let margin = (blockType === 2) ? 14 : 0;
+                
                 let bBox = {
-                    left: col * Constants.BLOCK_SIZE,
-                    right: (col+1) * Constants.BLOCK_SIZE,
-                    top: row * Constants.BLOCK_SIZE,
-                    bottom: (row+1) * Constants.BLOCK_SIZE
+                    left: col * Constants.BLOCK_SIZE + margin,
+                    right: (col+1) * Constants.BLOCK_SIZE - margin,
+                    top: row * Constants.BLOCK_SIZE + margin,
+                    bottom: (row+1) * Constants.BLOCK_SIZE - margin
                 };
                 
                 // Portails
