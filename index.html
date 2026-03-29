@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Dash Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Fond dynamique Géré via Canvas -->
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        
+        <!-- Interface Utilisateur -->
+        <div id="ui-layer">
+            <!-- Menu Principal -->
+            <div id="main-menu" class="screen active">
+                <h1 id="title-glow">GEOMETRY DASH</h1>
+                <h2>CLONE INTERACTIF</h2>
+                <div class="level-select">
+                    <button class="btnplay" onclick="startGame(1)">START STEREO MADNESS</button>
+                </div>
+                <p>Appuyez sur ESPACE ou CLIQUEZ pour sauter / voler avec la fusée</p>
+            </div>
+            
+            <!-- Écran de Game Over -->
+            <div id="game-over-screen" class="screen">
+                <h1 style="color: var(--danger-color)">GAME OVER</h1>
+                <p>Progression: <span id="progress-percent">0</span>%</p>
+                <div class="level-select">
+                    <button class="btnplay" onclick="restartGame()">RÉESSAYER</button>
+                    <button class="btnmenu" onclick="showMainMenu()">MENU PRINCIPAL</button>
+                </div>
+            </div>
+
+            <!-- Écran de Victoire -->
+            <div id="victory-screen" class="screen">
+                <h1 style="color: #00ffcc">NIVEAU TERMINÉ !</h1>
+                <p>Progression: 100%</p>
+                <div class="level-select">
+                    <button class="btnmenu" onclick="showMainMenu()">MENU PRINCIPAL</button>
+                </div>
+            </div>
+
+            <!-- Barre de progression en jeu -->
+            <div id="hud" class="hidden">
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="levels.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
