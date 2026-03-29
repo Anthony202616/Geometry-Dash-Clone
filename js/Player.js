@@ -25,6 +25,12 @@ class Player {
 
     updatePhysics(isPressing) {
         if (this.mode === "cube") {
+            // Saut automatique à répétition si la touche est maintenue,
+            // (La fonction jump() s'assure d'elle-même que le cube touche le sol)
+            if (isPressing) {
+                this.jump();
+            }
+
             this.velocityY += Constants.GRAVITY * this.gravityDir;
             if (Math.abs(this.velocityY) > 18) this.velocityY = 18 * this.gravityDir;
             
