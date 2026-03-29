@@ -1,8 +1,8 @@
 // js/Level.js
 class Level {
     constructor(levelIndex) {
-        // Assume levelsData (venant de levels.js) est accessible globalement
-        this.data = window.levelsData[levelIndex];
+        // levelsData (venant de levels.js)
+        this.data = levelsData[levelIndex];
         this.index = levelIndex;
         this.mapColumns = this.data.mapColumns;
         this.totalLength = this.mapColumns.length * Constants.BLOCK_SIZE;

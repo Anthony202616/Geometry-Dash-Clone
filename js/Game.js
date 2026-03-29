@@ -103,11 +103,13 @@ class Game {
         let startCol = Math.floor(absoluteLeft / Constants.BLOCK_SIZE);
         let endCol = Math.floor(absoluteRight / Constants.BLOCK_SIZE);
         
+        // Hitbox du joueur (Tolérante sur les côtés pour ne pas mourir d'un pixel,
+        // mais stricte en haut et bas pour s'arrimer parfaitement au sol)
         let pBox = {
             left: absoluteLeft + 6,
             right: absoluteRight - 6,
-            top: this.player.y + 4,
-            bottom: this.player.y + this.player.height - 4
+            top: this.player.y,
+            bottom: this.player.y + this.player.height
         };
 
         for(let col = startCol; col <= endCol; col++) {
