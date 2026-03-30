@@ -98,4 +98,14 @@ class Renderer {
         }
         this.ctx.restore();
     }
+
+    drawParticles(particles) {
+        for(let p of particles) {
+            if(p.life <= 0) continue;
+            this.ctx.globalAlpha = p.life > 0 ? p.life : 0;
+            this.ctx.fillStyle = p.color;
+            this.ctx.fillRect(p.x - 4, p.y - 4, 8, 8);
+        }
+        this.ctx.globalAlpha = 1.0;
+    }
 }

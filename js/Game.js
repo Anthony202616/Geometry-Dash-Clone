@@ -38,15 +38,36 @@ class Game {
     }
 
     gameOver() {
+        if(this.currentState === "gameover") return;
         this.currentState = "gameover";
+        
+        // Génération des particules ("Explosion")
+        this.particles = [];
+        let pColor = this.currentLevel.data.primaryColor;
+        for(let i=0; i<35; i++) {
+            this.particles.push({
+                x: this.player.x + this.player.width/2,
+                y: this.player.y + this.player.height/2,
+                vx: (Math.random() - 0.5) * 16,
+                vy: (Math.random() - 0.5) * 16,
+                life: 1.0,
+                color: pColor
+            });
+        }
+        
         document.getElementById("game-container").classList.remove("playing");
-        document.getElementById("game-over-screen").classList.add("active");
         document.getElementById("hud").classList.add("hidden");
         
         let cont = document.getElementById("game-container");
         cont.style.transform = "translateX(-15px) rotate(-1deg)";
         setTimeout(() => cont.style.transform = "translateX(15px) rotate(1deg)", 50);
         setTimeout(() => cont.style.transform = "translateX(0) rotate(0)", 100);
+        
+        setTimeout(() => {
+            if(this.currentState === "gameover") {
+                 document.getElementById("game-over-screen").classList.add("active");
+            }
+        }, 1000);
     }
 
     victory() {
@@ -57,10 +78,25 @@ class Game {
     }
 
     loop() {
-        if(this.currentState !== "playing") return;
+        if(this.currentState === "menu" || this.currentState === "victory") return;
         requestAnimationFrame(() => this.loop());
-        this.update();
-        this.draw();
+        
+        if(this.currentState === "playing") {
+            this.update();
+            this.draw();
+        } else if (this.currentState === "gameover") {
+            this.updateParticles();
+            this.draw();
+        }
+    }
+
+    updateParticles() {
+        for(let p of this.particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.6; // Gravité des débris
+            p.life -= 0.02; // Atténuation progressive
+        }
     }
 
     update() {
@@ -70,15 +106,15 @@ class Game {
         this.player.updatePhysics(this.input.isPressing);
         
         // --- 2. Garde-fous globaux de scène ---
-        if(this.player.y < 0) {
-            this.player.y = 0;
-            this.player.velocityY = 0;
-            if(this.player.gravityDir === -1) this.player.isJumping = false; 
+        if(this.player.y < -30) {
+             // Chute dans le ciel (Inversé sans plafond)
+             this.gameOver();
+             return;
         }
-        if(this.player.y + this.player.height > this.canvas.height) {
-             this.player.y = this.canvas.height - this.player.height;
-             this.player.velocityY = 0;
-             if(this.player.gravityDir === 1) this.player.isJumping = false; 
+        if(this.player.y + this.player.height > this.canvas.height + 20) {
+             // Chute dans le vide infini ! Plus de glissade. Mort.
+             this.gameOver();
+             return;
         }
         
         // --- 3. Détecteur de collisions géré par le niveau ---
@@ -192,6 +228,10 @@ class Game {
     draw() {
         this.renderer.clear();
         this.renderer.drawLevel(this.currentLevel, this.cameraX);
-        this.renderer.drawPlayer(this.player, this.currentLevel.data.primaryColor);
+        if(this.currentState === "playing") {
+            this.renderer.drawPlayer(this.player, this.currentLevel.data.primaryColor);
+        } else if(this.currentState === "gameover") {
+            this.renderer.drawParticles(this.particles);
+        }
     }
 }

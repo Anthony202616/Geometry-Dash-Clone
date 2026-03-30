@@ -2,173 +2,125 @@
 
 const levelsData = {};
 
-let cols = [];
-function addP(count, colArray) {
-    for(let i=0; i<count; i++) cols.push([...colArray]);
+function addP(targetCols, count, colArray) {
+    for(let i=0; i<count; i++) targetCols.push([...colArray]);
 }
 
 // ==========================================
-// NIVEAU 1 : STEREO MADNESS (Allongé & Complet)
+// NIVEAU 1 : STEREO MADNESS (Facile)
 // ==========================================
 levelsData[1] = {
-    name: "Stereo Madness (Facile)",
-    bgColor: "#0a0a2a", // Sombre bleuté
-    primaryColor: "#00ffcc", // Tron cyan
-    obstacleColor: "#111144",
-    speed: 3.0,
-    mapColumns: []
+    name: "Stereo Madness", bgColor: "#0a0a2a", primaryColor: "#00ffcc", obstacleColor: "#111144", speed: 3.0, mapColumns: []
 };
-
-addP(20, [0,0,0,0,0,0,0,0,0,1]); // Départ
-
-// Série de 4 piques espacés
-for(let k=0; k<4; k++) {
-    cols.push([0,0,0,0,0,0,0,0,2,1]);
-    addP(8,  [0,0,0,0,0,0,0,0,0,1]);
-}
-
-// Escalier
-cols.push([0,0,0,0,0,0,0,0,1,1]);
-cols.push([0,0,0,0,0,0,0,1,1,1]); 
-addP(5,  [0,0,0,0,0,0,0,1,1,1]);  
-cols.push([0,0,0,0,0,0,0,0,1,1]); 
-addP(12, [0,0,0,0,0,0,0,0,0,1]);  
-
-// Série de Murs intermédiaires (Saut très haut requis)
-cols.push([0,0,0,0,0,0,0,1,1,1]);
-cols.push([0,0,0,0,0,0,0,1,1,1]);
-addP(12, [0,0,0,0,0,0,0,0,0,1]);
-cols.push([0,0,0,0,0,0,0,1,1,1]);
-cols.push([0,0,0,0,0,0,0,1,1,1]);
-addP(10, [0,0,0,0,0,0,0,0,0,1]);
-
-// FUSÉE
-cols.push([0,0,0,0,0,3,0,0,0,1]); 
-addP(8,  [0,0,0,0,0,0,0,0,0,1]); 
-addP(6,  [1,0,0,0,0,0,0,0,1,1]); 
-addP(6,  [0,0,0,0,0,0,0,0,0,1]); 
-addP(6,  [1,1,1,0,0,0,0,0,0,1]); 
-addP(6,  [0,0,0,0,0,0,0,0,0,1]); 
-addP(6,  [1,0,0,0,0,0,0,0,1,1]); 
-addP(6,  [0,0,0,0,0,0,0,0,0,1]); 
-addP(6,  [1,1,1,0,0,0,0,0,0,1]); 
-addP(6,  [0,0,0,0,0,0,0,0,0,1]);
-
-// CUBE (Sortie Fusée)
-cols.push([0,0,0,0,0,4,0,0,0,1]);
-addP(10, [0,0,0,0,0,0,0,0,0,1]);
-
-// Accélération des piques
-for(let k=0; k<5; k++) {
-    cols.push([0,0,0,0,0,0,0,0,2,1]);
-    addP(6,  [0,0,0,0,0,0,0,0,0,1]);
-}
-
-// GRAVITÉ INVERSÉE
-cols.push([0,0,0,0,0,5,0,0,0,1]); 
-addP(8,  [1,0,0,0,0,0,0,0,0,1]); 
-cols.push([1,2,0,0,0,0,0,0,0,1]); 
-addP(8,  [1,0,0,0,0,0,0,0,0,1]);  
-cols.push([1,2,0,0,0,0,0,0,0,1]); 
-addP(10, [1,0,0,0,0,0,0,0,0,1]);  
-
-// Retour gravité normale
-cols.push([1,0,0,0,0,6,0,0,0,1]); 
-addP(12, [0,0,0,0,0,0,0,0,0,1]);
-
-// LA GRANDE FIN : Arche Mémorable !
-addP(2,  [1,1,0,0,0,0,0,0,1,1]); 
-addP(2,  [1,1,1,0,0,0,0,1,1,1]); 
-cols.push([1,1,1,1,0,0,1,1,1,1]);
-addP(15, [1,1,1,1,1,0,1,1,1,1]); // Tunnel creux en plein ciel !
-addP(2,  [1,1,0,0,0,0,0,0,1,1]); 
-addP(25, [0,0,0,0,0,0,0,0,0,1]); 
-
-levelsData[1].mapColumns = cols;
-
+let c1 = [];
+addP(c1, 20, [0,0,0,0,0,0,0,0,0,1]); 
+for(let k=0; k<4; k++) { c1.push([0,0,0,0,0,0,0,0,2,1]); addP(c1, 8, [0,0,0,0,0,0,0,0,0,1]); }
+c1.push([0,0,0,0,0,0,0,0,1,1]); c1.push([0,0,0,0,0,0,0,1,1,1]); addP(c1, 5, [0,0,0,0,0,0,0,1,1,1]); c1.push([0,0,0,0,0,0,0,0,1,1]); addP(c1, 12, [0,0,0,0,0,0,0,0,0,1]);
+c1.push([0,0,0,0,0,0,0,1,1,1]); c1.push([0,0,0,0,0,0,0,1,1,1]); addP(c1, 12, [0,0,0,0,0,0,0,0,0,1]);
+c1.push([0,0,0,0,0,0,0,1,1,1]); c1.push([0,0,0,0,0,0,0,1,1,1]); addP(c1, 10, [0,0,0,0,0,0,0,0,0,1]);
+c1.push([0,0,0,0,0,3,0,0,0,1]); addP(c1, 8, [0,0,0,0,0,0,0,0,0,1]); 
+addP(c1, 6, [1,0,0,0,0,0,0,0,1,1]); addP(c1, 6, [0,0,0,0,0,0,0,0,0,1]); addP(c1, 6, [1,1,1,0,0,0,0,0,0,1]); 
+addP(c1, 6, [0,0,0,0,0,0,0,0,0,1]); addP(c1, 6, [1,0,0,0,0,0,0,0,1,1]); addP(c1, 6, [0,0,0,0,0,0,0,0,0,1]); 
+addP(c1, 6, [1,1,1,0,0,0,0,0,0,1]); addP(c1, 6, [0,0,0,0,0,0,0,0,0,1]);
+c1.push([0,0,0,0,0,4,0,0,0,1]); addP(c1, 10, [0,0,0,0,0,0,0,0,0,1]);
+for(let k=0; k<5; k++) { c1.push([0,0,0,0,0,0,0,0,2,1]); addP(c1, 6, [0,0,0,0,0,0,0,0,0,1]); }
+c1.push([0,0,0,0,0,5,0,0,0,1]); addP(c1, 8, [1,0,0,0,0,0,0,0,0,1]); c1.push([1,2,0,0,0,0,0,0,0,1]); addP(c1, 8, [1,0,0,0,0,0,0,0,0,1]); c1.push([1,2,0,0,0,0,0,0,0,1]); addP(c1, 10, [1,0,0,0,0,0,0,0,0,1]);
+c1.push([1,0,0,0,0,6,0,0,0,1]); addP(c1, 12, [0,0,0,0,0,0,0,0,0,1]);
+addP(c1, 2, [1,1,0,0,0,0,0,0,1,1]); addP(c1, 2, [1,1,1,0,0,0,0,1,1,1]); c1.push([1,1,1,1,0,0,1,1,1,1]); addP(c1, 15, [1,1,1,1,1,0,1,1,1,1]); addP(c1, 2, [1,1,0,0,0,0,0,0,1,1]); 
+addP(c1, 25, [0,0,0,0,0,0,0,0,0,1]);
+levelsData[1].mapColumns = c1;
 
 // ==========================================
-// NIVEAU 2 : BACK ON TRACK (Allongé)
+// NIVEAU 2 : BACK ON TRACK (Normal)
 // ==========================================
 levelsData[2] = {
-    name: "Back on Track",
-    bgColor: "#2a0a2a", 
-    primaryColor: "#ff00ff", 
-    obstacleColor: "#441144",
-    speed: 3.5, 
-    mapColumns: []
+    name: "Back on Track", bgColor: "#2a0a2a", primaryColor: "#ff00ff", obstacleColor: "#441144", speed: 3.5, mapColumns: []
 };
-
-let cols2 = [];
-function addP2(count, colArray) { for(let i=0; i<count; i++) cols2.push([...colArray]); }
-
-addP2(15, [0,0,0,0,0,0,0,0,0,1]); 
-
-// Doubles piques espacés
-for(let k=0; k<3; k++) {
-    cols2.push([0,0,0,0,0,0,0,0,2,1]);
-    addP2(1, [0,0,0,0,0,0,0,0,0,1]);
-    cols2.push([0,0,0,0,0,0,0,0,2,1]);
-    addP2(12, [0,0,0,0,0,0,0,0,0,1]);
+let c2 = [];
+addP(c2, 10, [0,0,0,0,0,0,0,0,0,1]);
+for(let k=0; k<3; k++) { c2.push([0,0,0,0,0,0,0,0,2,1]); addP(c2, 1, [0,0,0,0,0,0,0,0,0,1]); c2.push([0,0,0,0,0,0,0,0,2,1]); addP(c2, 8, [0,0,0,0,0,0,0,0,0,1]); }
+// Grands Escaliers et Gaps (Chutes mortelles programmées)
+addP(c2, 5, [0,0,0,0,0,0,0,0,1,1]); addP(c2, 5, [0,0,0,0,0,0,0,1,1,1]); addP(c2, 5, [0,0,0,0,0,0,1,1,1,1]); addP(c2, 5, [0,0,0,0,0,1,1,1,1,1]); 
+addP(c2, 5, [0,0,0,0,0,0,0,0,0,0]); // Trou noir mortel !
+addP(c2, 8, [0,0,0,0,0,0,0,1,1,1]); addP(c2, 4, [0,0,0,0,0,0,0,0,0,0]); addP(c2, 8, [0,0,0,0,0,0,0,1,1,1]); 
+c2.push([0,0,0,0,0,0,0,2,1,1]); addP(c2, 12, [0,0,0,0,0,0,0,0,0,1]);
+// Triple Piques
+for(let k=0; k<4; k++) {
+    c2.push([0,0,0,0,0,0,0,0,2,1]); addP(c2, 1, [0,0,0,0,0,0,0,0,0,1]); c2.push([0,0,0,0,0,0,0,0,2,1]); addP(c2, 1, [0,0,0,0,0,0,0,0,0,1]); c2.push([0,0,0,0,0,0,0,0,2,1]);
+    addP(c2, 8, [0,0,0,0,0,0,0,0,0,1]);
 }
-
-// Escalier Géant : Maintenez Espace ! (Test de l'auto-jump)
-addP2(6, [0,0,0,0,0,0,0,0,1,1]); 
-addP2(6, [0,0,0,0,0,0,0,1,1,1]); 
-addP2(6, [0,0,0,0,0,0,1,1,1,1]); 
-addP2(8, [0,0,0,0,0,1,1,1,1,1]); 
-// Redescente abrupte
-cols2.push([0,0,0,0,0,0,0,1,1,1]); 
-cols2.push([0,0,0,0,0,0,0,0,1,1]);
-addP2(15, [0,0,0,0,0,0,0,0,0,1]);
-
-// Pique vicieux en redescente
-cols2.push([0,0,0,0,0,0,0,0,2,1]);
-addP2(15, [0,0,0,0,0,0,0,0,0,1]);
-
-// Enchainement de sauts continus longs
-for(let k=0; k<6; k++) {
-    cols2.push([0,0,0,0,0,0,0,0,2,1]);
-    addP2(6, [0,0,0,0,0,0,0,0,0,1]);
-}
-
-// Grands murs infranchissables
-cols2.push([0,0,0,0,0,0,1,1,1,1]); 
-cols2.push([0,0,0,0,0,0,1,1,1,1]); 
-addP2(12, [0,0,0,0,0,0,0,0,0,1]);
-cols2.push([0,0,0,0,0,1,1,1,1,1]); 
-cols2.push([0,0,0,0,0,1,1,1,1,1]); 
-addP2(15, [0,0,0,0,0,0,0,0,0,1]);
-
-// Arche Finale Niveau 2
-addP2(10, [1,1,0,0,0,0,0,1,1,1]); 
-addP2(25, [0,0,0,0,0,0,0,0,0,1]); 
-
-levelsData[2].mapColumns = cols2;
-
+addP(c2, 25, [0,0,0,0,0,0,0,0,0,1]);
+levelsData[2].mapColumns = c2;
 
 // ==========================================
-// NIVEAU 3 : POLARGEIST 
+// NIVEAU 3 : POLARGEIST (Difficile)
 // ==========================================
 levelsData[3] = {
-    name: "Polargeist",
-    bgColor: "#0a2a2a", 
-    primaryColor: "#00ff88", 
-    obstacleColor: "#114444",
-    speed: 4.0, 
-    mapColumns: []
+    name: "Polargeist", bgColor: "#0a2a2a", primaryColor: "#00ff88", obstacleColor: "#114444", speed: 4.0, mapColumns: []
 };
+let c3 = [];
+addP(c3, 10, [0,0,0,0,0,0,0,0,0,1]);
+c3.push([0,0,0,0,0,3,0,0,0,1]); // Fusée directe
+addP(c3, 5, [1,1,0,0,0,0,0,2,1,1]); addP(c3, 5, [1,1,2,0,0,0,0,0,1,1]); addP(c3, 5, [1,1,0,0,0,0,0,2,1,1]); 
+addP(c3, 5, [1,1,1,0,0,2,0,0,1,1]); addP(c3, 5, [1,1,0,0,2,0,0,1,1,1]); addP(c3, 5, [1,1,1,0,0,2,0,0,1,1]); 
+c3.push([0,0,0,0,0,4,0,0,0,1]); // Sortie Fusée
+addP(c3, 6, [0,0,0,0,0,0,0,0,0,1]); 
+c3.push([0,0,0,0,0,5,0,0,0,1]); // Gravité inversée directe
+addP(c3, 6, [1,0,0,0,0,0,0,0,0,0]); // Glissade plafond sans sol
+c3.push([1,2,0,0,0,0,0,0,0,0]); c3.push([1,2,0,0,0,0,0,0,0,0]); 
+addP(c3, 5, [1,0,0,0,0,0,0,0,0,0]);
+c3.push([1,0,0,0,0,6,0,0,0,1]); // Chute vers Sol
+addP(c3, 10, [0,0,0,0,0,0,0,0,0,1]);
+for(let k=0; k<6; k++) { c3.push([0,0,0,0,0,0,1,1,1,1]); addP(c3, 6, [0,0,0,0,0,0,0,0,0,1]); } // Murs de l'enfer
+addP(c3, 20, [0,0,0,0,0,0,0,0,0,1]);
+levelsData[3].mapColumns = c3;
 
-let cols3 = [];
-function addP3(count, colArray) { for(let i=0; i<count; i++) cols3.push([...colArray]); }
+// ==========================================
+// NIVEAU 4 : DRY OUT (Très Difficile)
+// ==========================================
+levelsData[4] = {
+    name: "Dry Out", bgColor: "#2a1500", primaryColor: "#ffaa00", obstacleColor: "#402000", speed: 4.5, mapColumns: []
+};
+let c4 = [];
+addP(c4, 15, [0,0,0,0,0,0,0,0,0,1]);
+// Gaps de l'extrême
+for(let k=0; k<5; k++) {
+    addP(c4, 5, [0,0,0,0,0,0,0,0,0,0]); // Trou noir large
+    addP(c4, 4, [0,0,0,0,0,0,0,0,0,1]); // Zone sûre minuscule
+}
+addP(c4, 5, [0,0,0,0,0,0,0,0,0,1]);
+c4.push([0,0,0,0,0,5,0,0,0,1]); // Gravité JAUNE
+c4.push([0,0,0,0,0,3,0,0,0,1]); // FUSÉE INVERSÉE !
+addP(c4, 5, [0,0,0,0,0,0,0,0,0,0]);
+addP(c4, 6, [1,1,0,0,0,2,0,0,1,1]); // Tunnels mortels au plafond
+addP(c4, 6, [1,1,0,2,0,0,0,0,1,1]);
+addP(c4, 6, [1,1,0,0,0,2,0,0,1,1]);
+c4.push([0,0,0,0,0,4,0,0,0,1]); // Cube Inversé
+c4.push([0,0,0,0,0,6,0,0,0,1]); // Retour Normal
+addP(c4, 25, [0,0,0,0,0,0,0,0,0,1]);
+levelsData[4].mapColumns = c4;
 
-addP3(15, [0,0,0,0,0,0,0,0,0,1]);
-cols3.push([0,0,0,0,0,3,0,0,0,1]); // Fusée directe !
-addP3(10, [0,0,0,0,0,0,0,0,0,1]);
-addP3(10, [1,1,0,0,0,0,0,0,1,1]); // Tunnel
-addP3(10, [1,1,1,1,0,0,0,0,0,1]);
-addP3(10, [1,0,0,0,0,0,0,1,1,1]);
-addP3(30, [0,0,0,0,0,0,0,0,0,1]);
-levelsData[3].mapColumns = cols3;
+// ==========================================
+// NIVEAU 5 : BASE AFTER BASE (DÉMON)
+// ==========================================
+levelsData[5] = {
+    name: "Base After Base", bgColor: "#110000", primaryColor: "#ff0000", obstacleColor: "#000000", speed: 5.0, mapColumns: []
+};
+let c5 = [];
+addP(c5, 10, [0,0,0,0,0,0,0,0,0,1]);
+// Triple piques ultra rapides à l'aveugle
+for(let k=0; k<6; k++) {
+    c5.push([0,0,0,0,0,0,0,0,2,1]); c5.push([0,0,0,0,0,0,0,0,2,1]); c5.push([0,0,0,0,0,0,0,0,2,1]);
+    addP(c5, 4, [0,0,0,0,0,0,0,0,0,1]);
+}
+addP(c5, 10, [0,0,0,0,0,0,0,0,0,0]); // Gouffre surprise
+addP(c5, 3, [0,0,0,0,0,0,0,0,0,1]);
+c5.push([0,0,0,0,0,5,0,0,0,0]); // Jaune dans le vide
+addP(c5, 5, [1,0,0,0,0,0,0,0,0,0]); 
+c5.push([1,2,0,0,0,0,0,0,0,0]); c5.push([1,2,0,0,0,0,0,0,0,0]); c5.push([1,2,0,0,0,0,0,0,0,0]);
+addP(c5, 5, [1,0,0,0,0,0,0,0,0,0]); 
+c5.push([0,0,0,0,0,6,0,0,0,1]); // Bleu au sol
+addP(c5, 20, [0,0,0,0,0,0,0,0,0,1]);
+levelsData[5].mapColumns = c5;
 
 window.levelsData = levelsData;
